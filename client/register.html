@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register — BloodDrop</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="nav-logo">
+                <div class="logo-icon">🫀</div>
+                <span>BloodDrop</span>
+            </a>
+            <div class="nav-links hide-mobile">
+                <a href="index.html">Home</a>
+                <a href="find-blood.html">Find Blood</a>
+            </div>
+            <div class="nav-auth">
+                <a href="login.html" class="btn btn-sm btn-secondary">Sign In</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="auth-page" style="padding-top: calc(var(--nav-height) + 40px);">
+        <div class="card auth-card animate-in" style="max-width: 600px; padding: 40px;">
+            <h1>Become a Donor</h1>
+            <p class="auth-subtitle">Create an account to save lives</p>
+            
+            <form id="registerForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">First Name</label>
+                        <input type="text" id="firstName" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Last Name</label>
+                        <input type="text" id="lastName" class="form-input" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Username</label>
+                        <input type="text" id="username" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" id="email" class="form-input" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <input type="password" id="password" class="form-input" minlength="6" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Blood Group</label>
+                        <select id="bloodGroup" class="form-select" required>
+                            <option value="" disabled selected>Select Group</option>
+                            <option value="A+">A+</option>
+                            <option value="A-">A-</option>
+                            <option value="B+">B+</option>
+                            <option value="B-">B-</option>
+                            <option value="AB+">AB+</option>
+                            <option value="AB-">AB-</option>
+                            <option value="O+">O+</option>
+                            <option value="O-">O-</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Phone</label>
+                        <input type="tel" id="phone" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Date of Birth</label>
+                        <input type="date" id="dob" class="form-input" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">City</label>
+                        <input type="text" id="city" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">State</label>
+                        <input type="text" id="state" class="form-input" required>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" style="width:100%;margin-top:20px;">Register</button>
+            </form>
+            
+            <div style="text-align:center;font-size:0.9rem;margin-top:24px;">
+                Already have an account? <a href="login.html">Sign in here</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            const originalText = btn.textContent;
+            btn.textContent = 'Registering...';
+            btn.disabled = true;
+
+            const data = {
+                first_name: document.getElementById('firstName').value,
+                last_name: document.getElementById('lastName').value,
+                username: document.getElementById('username').value,
+                email: document.getElementById('email').value,
+                password: document.getElementById('password').value,
+                blood_group: document.getElementById('bloodGroup').value,
+                phone: document.getElementById('phone').value,
+                date_of_birth: document.getElementById('dob').value,
+                city: document.getElementById('city').value,
+                state: document.getElementById('state').value
+            };
+
+            try {
+                await API.register(data);
+                showToast('Registration successful!', 'success');
+                setTimeout(() => window.location.href = 'dashboard.html', 1000);
+            } catch (err) {
+                let msg = 'Registration failed';
+                if (err.data && err.data.errors) {
+                    msg = Object.values(err.data.errors).flat().join('<br>');
+                }
+                showToast(msg, 'error');
+                btn.textContent = originalText;
+                btn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>

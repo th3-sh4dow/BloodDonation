@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard — BloodDrop</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body style="background: var(--bg-primary);">
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="nav-logo">
+                <div class="logo-icon">🫀</div>
+                <span>BloodDrop</span>
+            </a>
+            <button class="nav-toggle"><span></span><span></span><span></span></button>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="find-blood.html">Find Blood</a>
+                <a href="request-blood.html">Request Blood</a>
+            </div>
+            <div class="nav-auth"></div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="dashboard-layout">
+            
+            <!-- Sidebar -->
+            <aside class="dashboard-sidebar">
+                <div class="card profile-card" id="profileCard">
+                    <!-- Loaded via JS -->
+                    <div class="skeleton" style="width:80px;height:80px;border-radius:50%;margin:0 auto 16px;"></div>
+                    <div class="skeleton" style="height:24px;margin-bottom:8px;"></div>
+                    <div class="skeleton" style="height:16px;"></div>
+                </div>
+
+                <div class="card mt-4" style="margin-top: 24px; padding: 20px;">
+                    <h3 style="font-size: 1.1rem; margin-bottom: 16px;">Quick Actions</h3>
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <button class="btn btn-primary" onclick="showDonateModal()" style="width: 100%;">Record Donation</button>
+                        <a href="request-blood.html" class="btn btn-secondary" style="width: 100%;">Request Blood</a>
+                        <button class="btn btn-outline" id="toggleAvailabilityBtn" onclick="toggleAvailability()" style="width: 100%;">Toggle Availability</button>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="dashboard-content">
+                
+                <div class="tabs">
+                    <button class="tab-btn active" onclick="switchTab('donations')">Donation History</button>
+                    <button class="tab-btn" onclick="switchTab('requests')">My Requests</button>
+                    <button class="tab-btn" onclick="switchTab('notifications')">Notifications <span id="tabNotifCount" style="background:var(--crimson);color:#fff;border-radius:50%;padding:2px 6px;font-size:0.7rem;margin-left:4px;display:none;"></span></button>
+                </div>
+
+                <!-- Donations Tab -->
+                <div id="tab-donations" class="tab-content active">
+                    <div class="card">
+                        <h2 style="font-size: 1.25rem; margin-bottom: 24px;">Donation Journey</h2>
+                        <div class="timeline" id="donationsTimeline">
+                            <!-- Loaded via JS -->
+                            <div class="skeleton" style="height:80px;margin-bottom:20px;border-radius:var(--radius-md);"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Requests Tab -->
+                <div id="tab-requests" class="tab-content">
+                    <div class="card">
+                        <h2 style="font-size: 1.25rem; margin-bottom: 24px;">My Blood Requests</h2>
+                        <div id="myRequestsList">
+                            <!-- Loaded via JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notifications Tab -->
+                <div id="tab-notifications" class="tab-content">
+                    <div class="card">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                            <h2 style="font-size: 1.25rem;">Notifications</h2>
+                            <button class="btn btn-sm btn-secondary" onclick="markAllNotificationsRead()">Mark all as read</button>
+                        </div>
+                        <div id="notificationsList" style="margin: -28px; margin-top: 0; padding-bottom: 12px;">
+                            <!-- Loaded via JS -->
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- Record Donation Modal -->
+    <div class="modal-overlay" id="donateModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Record Blood Donation</h3>
+                <button class="modal-close" onclick="closeModal('donateModal')">×</button>
+            </div>
+            <div class="modal-body">
+                <form id="recordDonationForm">
+                    <div class="form-group">
+                        <label class="form-label">Donation Date</label>
+                        <input type="date" id="donateDate" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Units Donated</label>
+                        <input type="number" id="donateUnits" class="form-input" min="1" max="5" value="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Hospital / Blood Bank</label>
+                        <input type="text" id="donateHospital" class="form-input" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">Save Record</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
