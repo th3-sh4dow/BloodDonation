@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# Render build script for Django backend
+# Render build script — single service (Django serves frontend + API)
 
-set -o errexit  # Exit on error
+set -o errexit
 
 pip install -r requirements.txt
 

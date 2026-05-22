@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Donation — Save a Life</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="/" class="nav-logo">
+                <div class="logo-icon">🫀</div>
+                <span>BloodDrop</span>
+            </a>
+            
+            <button class="nav-toggle">
+                <span></span><span></span><span></span>
+            </button>
+            
+            <div class="nav-links">
+                <a href="/" class="active">Home</a>
+                <a href="/find-blood/">Find Blood</a>
+                <a href="/request-blood/">Request Blood</a>
+                <a href="#how">How it Works</a>
+                <a href="#contact">Contact</a>
+            </div>
+            
+            <div class="nav-auth">
+                <div class="skeleton" style="width:120px;height:36px;border-radius:18px;"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="pulse-dot"></span> Give Blood, Give Life
+                </div>
+                <h1>Every drop counts. <br>Be a <span class="highlight">Lifesaver</span> today.</h1>
+                <p>Join our community of donors and help save lives. Connect with those in need, track your donations, and make a real difference in the world.</p>
+                <div class="hero-actions">
+                    <a href="/request-blood/" class="btn btn-emergency btn-lg">Emergency Request</a>
+                    <a href="/register/" class="btn btn-primary btn-lg">Become a Donor</a>
+                </div>
+                
+                <div class="hero-stats" id="hero-stats">
+                    <!-- Loaded via JS -->
+                    <div class="hero-stat animate-in">
+                        <div class="stat-number skeleton-stat">—</div>
+                        <div class="stat-label">Registered Donors</div>
+                    </div>
+                    <div class="hero-stat animate-in">
+                        <div class="stat-number skeleton-stat">—</div>
+                        <div class="stat-label">Lives Saved</div>
+                    </div>
+                    <div class="hero-stat animate-in hide-mobile">
+                        <div class="stat-number skeleton-stat">—</div>
+                        <div class="stat-label">Requests Fulfilled</div>
+                    </div>
+                </div>
+
+                <!-- Real-world context bar -->
+                <div class="realworld-bar animate-in">
+                    <span class="rw-item"><span class="rw-dot red"></span>Someone needs blood every <strong>2 seconds</strong></span>
+                    <span class="rw-sep">·</span>
+                    <span class="rw-item">1 donation saves up to <strong>3 lives</strong></span>
+                    <span class="rw-sep">·</span>
+                    <span class="rw-item"><span class="rw-dot orange"></span>Global shortage: <strong>6.8M units/year</strong></span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-visual hide-mobile">
+            <div class="blood-drop">
+                <svg viewBox="0 0 100 150">
+                    <path d="M50 0 C50 0, 100 70, 100 100 C100 127.6, 77.6 150, 50 150 C22.4 150, 0 127.6, 0 100 C0 70, 50 0, 50 0 Z" fill="url(#grad1)" />
+                    <defs>
+                        <linearGradient id="grad1" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" style="stop-color:#FF2D55;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#DC143C;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- Urgent Requests Section -->
+    <section class="urgent-section">
+        <div class="container">
+            <div class="urgent-header">
+                <h3><span class="urgent-dot"></span> Urgent Blood Requests</h3>
+                <a href="/find-blood/" class="btn btn-sm btn-outline">View All</a>
+            </div>
+            <div class="urgent-cards" id="urgent-cards-container">
+                <!-- Loaded via JS -->
+                <div class="skeleton" style="height:86px;border-radius:12px;"></div>
+                <div class="skeleton" style="height:86px;border-radius:12px;"></div>
+                <div class="skeleton" style="height:86px;border-radius:12px;"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Global Crisis Banner -->
+    <section class="crisis-banner">
+        <div class="container">
+            <div class="crisis-inner">
+                <div class="crisis-item">
+                    <div class="crisis-num">118.5M</div>
+                    <div class="crisis-label">donations collected globally per year</div>
+                </div>
+                <div class="crisis-divider"></div>
+                <div class="crisis-item">
+                    <div class="crisis-num crisis-red">35%</div>
+                    <div class="crisis-label">U.S. blood supply dropped in Jan 2026 — Red Cross declared severe shortage</div>
+                </div>
+                <div class="crisis-divider"></div>
+                <div class="crisis-item">
+                    <div class="crisis-num">6.8M</div>
+                    <div class="crisis-label">unit global shortfall every single year</div>
+                </div>
+                <div class="crisis-divider"></div>
+                <div class="crisis-item">
+                    <div class="crisis-num crisis-red">Only 6.6</div>
+                    <div class="crisis-label">donations per 1,000 people in lower-middle-income countries (WHO 2025)</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="section" id="how">
+        <div class="container">
+            <div class="section-header animate-in">
+                <div class="section-badge">Simple Process</div>
+                <h2 class="section-title">How it Works</h2>
+                <p class="section-subtitle">The donation process from the time you arrive until the time you leave takes about an hour. The actual donation itself is only about 8–10 minutes — and it can save up to 3 lives.</p>
+            </div>
+            
+            <div class="steps-grid">
+                <div class="step-card animate-in">
+                    <div class="step-number">1</div>
+                    <h3>Register</h3>
+                    <p>Create an account and set your blood group and location.</p>
+                </div>
+                <div class="step-card animate-in">
+                    <div class="step-number">2</div>
+                    <h3>Get Notified</h3>
+                    <p>Receive notifications when someone near you needs your blood type.</p>
+                </div>
+                <div class="step-card animate-in">
+                    <div class="step-number">3</div>
+                    <h3>Donate</h3>
+                    <p>Connect with the requester and donate blood safely at a hospital.</p>
+                </div>
+                <div class="step-card animate-in">
+                    <div class="step-number">4</div>
+                    <h3>Save Lives</h3>
+                    <p>A single donation can save up to 3 lives. Track your impact on your dashboard.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section" style="background:var(--bg-secondary);">
+        <div class="container">
+            <div class="card card-glass" style="text-align:center;padding:60px 20px;">
+                <div class="section-badge" style="margin:0 auto 16px;">🚨 2026 Blood Crisis</div>
+                <h2 class="section-title" style="margin-bottom:20px;">The shortage is real. Your donation is the solution.</h2>
+                <p class="section-subtitle" style="margin-bottom:12px;">In January 2026, the American Red Cross declared a <strong>severe blood shortage</strong> — supply fell 35% in a single month. Hospitals are running low. Surgeries are being delayed.</p>
+                <p class="section-subtitle" style="margin-bottom:32px;">Every 2 seconds someone needs blood. Your blood is replaceable. A life is not.</p>
+                <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+                    <a href="/register/" class="btn btn-primary btn-lg">Donate Now — Save 3 Lives</a>
+                    <a href="/find-blood/" class="btn btn-outline btn-lg">Find a Donor</a>
+                </div>
+                <p style="margin-top:20px;font-size:0.85rem;color:var(--text-muted);">Source: American Red Cross (Jan 2026) · WHO Blood Safety Fact Sheet (May 2025)</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h3><div class="logo-icon" style="width:28px;height:28px;font-size:0.9rem;">🫀</div> BloodDrop</h3>
+                    <p>A modern blood donation management system connecting donors with patients in need to save lives efficiently and rapidly.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/find-blood/">Find Blood</a></li>
+                        <li><a href="/request-blood/">Request Blood</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Account</h4>
+                    <ul>
+                        <li><a href="/login/">Sign In</a></li>
+                        <li><a href="/register/">Register</a></li>
+                        <li><a href="/dashboard/">Dashboard</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact Support</h4>
+                    <ul>
+                        <li><a href="mailto:support@blooddrop.org">support@blooddrop.org</a></li>
+                        <li><a href="tel:1800000000">1800-000-0000</a></li>
+                        <li><a href="#">Help Center</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; 2026 BloodDrop System. Designed for life.
+            </div>
+        </div>
+    </footer>
+
+    <script src="/static/config.js"></script>
+    <script src="/static/js/api.js"></script>
+    <script src="/static/js/auth.js"></script>
+    <script src="/static/js/home.js"></script>
+</body>
+</html>

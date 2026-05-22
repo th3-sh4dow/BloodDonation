@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Blood — BloodDrop</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="/" class="nav-logo">
+                <div class="logo-icon">🫀</div>
+                <span>BloodDrop</span>
+            </a>
+            <button class="nav-toggle"><span></span><span></span><span></span></button>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/find-blood/">Find Blood</a>
+                <a href="/request-blood/" class="active">Request Blood</a>
+            </div>
+            <div class="nav-auth"></div>
+        </div>
+    </nav>
+
+    <div class="page-header" style="padding-bottom: 24px;">
+        <div class="container">
+            <h1>Request Blood</h1>
+            <p>Submit an emergency or routine blood request.</p>
+        </div>
+    </div>
+
+    <section class="section">
+        <div class="container">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;" class="form-row">
+                
+                <!-- Request Form -->
+                <div>
+                    <h2 style="font-size: 1.4rem; margin-bottom: 24px;">Submit a Request</h2>
+                    <div class="card card-glass">
+                        <div id="loginPrompt" style="display: none; text-align: center; padding: 40px 20px;">
+                            <div class="logo-icon" style="margin: 0 auto 16px; width: 48px; height: 48px; font-size: 1.5rem;">🔐</div>
+                            <h4>Login Required</h4>
+                            <p style="color: var(--text-secondary); margin-bottom: 20px;">You must be logged in to submit a blood request.</p>
+                            <a href="/login/" class="btn btn-primary">Sign In to Request</a>
+                        </div>
+                        
+                        <form id="requestForm" style="display: none;">
+                            <div class="form-group">
+                                <label class="form-label">Patient Name</label>
+                                <input type="text" id="patientName" class="form-input" required>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Blood Group Needed</label>
+                                    <select id="reqBloodGroup" class="form-select" required>
+                                        <option value="" disabled selected>Select</option>
+                                        <option value="A+">A+</option><option value="A-">A-</option>
+                                        <option value="B+">B+</option><option value="B-">B-</option>
+                                        <option value="AB+">AB+</option><option value="AB-">AB-</option>
+                                        <option value="O+">O+</option><option value="O-">O-</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Units Needed</label>
+                                    <input type="number" id="unitsNeeded" class="form-input" min="1" max="10" value="1" required>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Hospital Name</label>
+                                    <input type="text" id="hospitalName" class="form-input" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">City</label>
+                                    <input type="text" id="reqCity" class="form-input" required>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Contact Number</label>
+                                    <input type="tel" id="contactNumber" class="form-input" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Urgency Level</label>
+                                    <select id="urgency" class="form-select" required>
+                                        <option value="routine">Routine (Within 7 days)</option>
+                                        <option value="urgent">Urgent (Within 48 hours)</option>
+                                        <option value="emergency">Emergency (Immediate)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Additional Notes</label>
+                                <textarea id="notes" class="form-textarea" placeholder="Any specific requirements..."></textarea>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary" style="width: 100%;" id="submitBtn">Submit Request</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Recent Requests List -->
+                <div>
+                    <h2 style="font-size: 1.4rem; margin-bottom: 24px;">Active Requests</h2>
+                    <div id="activeRequestsList" style="display: flex; flex-direction: column; gap: 16px;">
+                        <!-- Loader -->
+                        <div class="skeleton" style="height: 100px; border-radius: var(--radius-md);"></div>
+                        <div class="skeleton" style="height: 100px; border-radius: var(--radius-md);"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Success Modal -->
+    <div class="modal-overlay" id="successModal">
+        <div class="modal" style="text-align: center; padding: 40px;">
+            <div style="font-size: 4rem; margin-bottom: 16px;">✅</div>
+            <h3 style="font-size: 1.5rem; margin-bottom: 8px;">Request Submitted</h3>
+            <p style="color: var(--text-secondary); margin-bottom: 24px;">Your request has been broadcasted to compatible donors in your area. You will be notified when someone accepts.</p>
+            <button class="btn btn-primary" onclick="window.location.href='dashboard.html'">Go to Dashboard</button>
+        </div>
+    </div>
+
+    <script src="/static/config.js"></script>
+    <script src="/static/js/api.js"></script>
+    <script src="/static/js/auth.js"></script>
+    <script src="/static/js/request-blood.js"></script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel — BloodDrop</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body style="background: var(--bg-primary);">
+    <nav class="navbar">
+        <div class="container" style="max-width: 1600px;">
+            <a href="/" class="nav-logo">
+                <div class="logo-icon">🛡️</div>
+                <span>BloodDrop Admin</span>
+            </a>
+            <div class="nav-links hide-mobile">
+                <a href="/">Back to Main Site</a>
+            </div>
+            <div class="nav-auth"></div>
+        </div>
+    </nav>
+
+    <div class="container" style="max-width: 1600px; padding-top: calc(var(--nav-height) + 32px);">
+        <div class="dashboard-layout" style="gap: 32px;">
+            
+            <aside class="dashboard-sidebar">
+                <div class="card">
+                    <h3 style="margin-bottom: 16px;">Admin Navigation</h3>
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <button class="btn btn-secondary tab-menu-btn active" style="justify-content: flex-start;" onclick="switchAdminTab('inventory')">🩸 Blood Inventory</button>
+                        <button class="btn btn-secondary tab-menu-btn" style="justify-content: flex-start;" onclick="switchAdminTab('requests')">🚨 Blood Requests</button>
+                        <button class="btn btn-secondary tab-menu-btn" style="justify-content: flex-start;" onclick="switchAdminTab('donors')">👥 Manage Donors</button>
+                    </div>
+                </div>
+            </aside>
+
+            <main class="dashboard-content">
+                
+                <!-- Inventory Tab -->
+                <div id="admin-inventory" class="admin-tab active">
+                    <h2 style="font-size: 1.5rem; margin-bottom: 24px;">Live Blood Inventory</h2>
+                    
+                    <div class="card">
+                        <div class="inventory-grid" id="inventoryGrid">
+                            <div class="loading-spinner"><div class="spinner"></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Requests Tab -->
+                <div id="admin-requests" class="admin-tab" style="display: none;">
+                    <h2 style="font-size: 1.5rem; margin-bottom: 24px;">All Blood Requests</h2>
+                    
+                    <div class="card card-glass" style="padding: 0; overflow: hidden;">
+                        <div style="overflow-x: auto;">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Patient/Hospital</th>
+                                        <th>Blood Group</th>
+                                        <th>Units</th>
+                                        <th>Urgency</th>
+                                        <th>City</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="requestsTableBody">
+                                    <!-- Loaded via JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Donors Tab -->
+                <div id="admin-donors" class="admin-tab" style="display: none;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                        <h2 style="font-size: 1.5rem;">Registered Donors</h2>
+                        <input type="text" class="form-input" id="donorSearch" placeholder="Search donors..." style="max-width: 300px;">
+                    </div>
+                    
+                    <div class="card card-glass" style="padding: 0; overflow: hidden;">
+                        <div style="overflow-x: auto;">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Blood Group</th>
+                                        <th>Location</th>
+                                        <th>Availability</th>
+                                        <th>Total Donations</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="donorsTableBody">
+                                    <!-- Loaded via JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- Inventory Edit Modal -->
+    <div class="modal-overlay" id="editInvModal">
+        <div class="modal" style="max-width: 400px;">
+            <div class="modal-header">
+                <h3>Update Inventory (<span id="editInvGroup"></span>)</h3>
+                <button class="modal-close" onclick="closeModal('editInvModal')">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Available Units</label>
+                    <input type="number" id="editInvUnits" class="form-input" min="0" required>
+                </div>
+                <button class="btn btn-primary" onclick="saveInventory()" style="width: 100%; margin-top: 16px;">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/config.js"></script>
+    <script src="/static/js/api.js"></script>
+    <script src="/static/js/auth.js"></script>
+    <script src="/static/js/admin.js"></script>
+</body>
+</html>

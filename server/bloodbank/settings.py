@@ -1,7 +1,7 @@
 """
 Django settings for bloodbank project.
 Blood Donation Management System
-Production-ready settings for Render deployment
+Single-service deployment — Django serves both API + frontend
 """
 
 from pathlib import Path
@@ -34,7 +34,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',   # Serve static files
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -45,10 +45,11 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'bloodbank.urls'
 
+# ── Templates — Django serves HTML files from client/ ──
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'client'],   # <-- HTML files live here
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -64,7 +65,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'bloodbank.wsgi.application'
 
 # ── Database ──
-# Uses PostgreSQL on Render (via DATABASE_URL env var), SQLite locally
 DATABASE_URL = config('DATABASE_URL', default=None)
 
 if DATABASE_URL:
@@ -93,9 +93,13 @@ TIME_ZONE = 'Asia/Kolkata'
 USE_I18N = True
 USE_TZ = True
 
-# ── Static Files (WhiteNoise) ──
+# ── Static Files ──
+# client/ folder ke CSS/JS/images WhiteNoise serve karega
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = [
+    BASE_DIR / 'client',   # client/css, client/js served as /static/css/, /static/js/
+]
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
@@ -112,52 +116,19 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 20,
 }
 
-# ── CORS ──
-# Frontend URLs — local dev + Render static site
-FRONTEND_URL = config('FRONTEND_URL', default='')
-
-CORS_ALLOWED_ORIGINS = [
-    'http://127.0.0.1:5500',
-    'http://localhost:5500',
-    'http://127.0.0.1:5501',
-    'http://localhost:5501',
-    'http://127.0.0.1:8080',
-    'http://localhost:8080',
-    'http://127.0.0.1:3000',
-    'http://localhost:3000',
-]
-
-# Add Render frontend URL dynamically
-if FRONTEND_URL:
-    CORS_ALLOWED_ORIGINS.append(FRONTEND_URL)
-
-# In production allow all origins (frontend is static, no secrets exposed via CORS)
-CORS_ALLOW_ALL_ORIGINS = DEBUG  # True in dev, False in prod
-
+# ── CORS — same origin now, no cross-origin needed ──
+CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
 # ── CSRF ──
-CSRF_TRUSTED_ORIGINS = [
-    'http://127.0.0.1:5500',
-    'http://localhost:5500',
-    'http://127.0.0.1:5501',
-    'http://localhost:5501',
-    'http://127.0.0.1:8080',
-    'http://localhost:8080',
-    'http://127.0.0.1:3000',
-    'http://localhost:3000',
-]
-
+CSRF_TRUSTED_ORIGINS = []
 RENDER_EXTERNAL_HOSTNAME = config('RENDER_EXTERNAL_HOSTNAME', default='')
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
     CSRF_TRUSTED_ORIGINS.append(f'https://{RENDER_EXTERNAL_HOSTNAME}')
 
-if FRONTEND_URL:
-    CSRF_TRUSTED_ORIGINS.append(FRONTEND_URL)
-
-# ── Session cookies (needed for cross-origin session auth) ──
-SESSION_COOKIE_SAMESITE = 'None'
-SESSION_COOKIE_SECURE = not DEBUG   # True in production (HTTPS)
-CSRF_COOKIE_SAMESITE = 'None'
+# ── Session cookies ──
+SESSION_COOKIE_SAMESITE = 'Lax'
+SESSION_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SAMESITE = 'Lax'
 CSRF_COOKIE_SECURE = not DEBUG
