@@ -1,0 +1,50 @@
+services:
+  # ── Django Backend (Web Service) ──
+  - type: web
+    name: blooddrop-backend
+    runtime: python
+    rootDir: server
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn bloodbank.wsgi:application --bind 0.0.0.0:$PORT"
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true          # Render auto-generates a secure key
+      - key: DEBUG
+        value: "False"
+      - key: PYTHON_VERSION
+        value: "3.11.0"
+      - key: RENDER_EXTERNAL_HOSTNAME
+        fromService:
+          type: web
+          name: blooddrop-backend
+          property: host
+      - key: FRONTEND_URL
+        fromService:
+          type: web
+          name: blooddrop-frontend
+          property: url
+      - key: DATABASE_URL
+        fromDatabase:
+          name: blooddrop-db
+          property: connectionString
+
+  # ── Frontend (Static Site) ──
+  - type: web
+    name: blooddrop-frontend
+    runtime: static
+    rootDir: client
+    buildCommand: ""               # No build step needed (plain HTML/CSS/JS)
+    staticPublishPath: "."
+    envVars:
+      - key: BACKEND_URL
+        fromService:
+          type: web
+          name: blooddrop-backend
+          property: url
+
+databases:
+  # ── PostgreSQL (Free tier) ──
+  - name: blooddrop-db
+    databaseName: blooddrop
+    user: blooddrop_user
+    plan: free

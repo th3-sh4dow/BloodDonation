@@ -10,7 +10,7 @@ async function loadHomeData() {
     try {
         const stats = await API.getStats();
         
-        // Update stats
+        // Update hero stats with real numbers from the DB
         const statsContainer = document.getElementById('hero-stats');
         statsContainer.innerHTML = `
             <div class="hero-stat animate-in">
@@ -41,15 +41,28 @@ async function loadHomeData() {
                 </div>
             `).join('');
         } else {
-            reqContainer.innerHTML = `<div style="grid-column:1/-1;color:var(--text-muted);">No urgent requests at the moment.</div>`;
+            reqContainer.innerHTML = `<div style="grid-column:1/-1;color:var(--text-muted);padding:20px 0;">No urgent requests at the moment.</div>`;
         }
 
     } catch (error) {
         console.error('Failed to load home data:', error);
+        // Show fallback — don't leave dashes forever
+        const statsContainer = document.getElementById('hero-stats');
+        statsContainer.innerHTML = `
+            <div class="hero-stat animate-in">
+                <div class="stat-number">—</div>
+                <div class="stat-label">Registered Donors</div>
+            </div>
+            <div class="hero-stat animate-in">
+                <div class="stat-number">—</div>
+                <div class="stat-label">Lives Saved</div>
+            </div>
+        `;
     }
 }
 
 function formatNumber(num) {
+    if (!num && num !== 0) return '—';
     if (num >= 1000) return (num / 1000).toFixed(1) + 'k';
     return num;
 }

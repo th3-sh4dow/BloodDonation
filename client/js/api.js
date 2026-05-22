@@ -1,8 +1,18 @@
 /**
  * API Client — Centralized fetch wrapper for Blood Donation API
+ * Auto-detects local dev vs production (Render)
  */
 
-const API_BASE = 'http://127.0.0.1:8000/api';
+// Set VITE_API_URL or REACT_APP_API_URL in env, OR
+// hardcode your Render backend URL below after deploying:
+//   const PRODUCTION_API = 'https://your-backend-name.onrender.com/api';
+const PRODUCTION_API = window.__BLOODDROP_API__ || '';
+
+const API_BASE = PRODUCTION_API || (
+    window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+        ? 'http://127.0.0.1:8000/api'
+        : `${window.location.protocol}//${window.location.hostname}/api`
+);
 
 /**
  * Get CSRF token from cookie (required for Django session auth)
